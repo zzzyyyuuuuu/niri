@@ -181,7 +181,7 @@ binds {
         }
 
         focus-ring {
-            width 3
+            width 0
             active-color "#00ac89"
             inactive-color "#505050"
         }
@@ -240,7 +240,7 @@ binds {
     }
 
     window-rule {
-        geometry-corner-radius 20 // Set every window radius to 20
+        geometry-corner-radius 0 // Set every window radius to 20
         clip-to-geometry true
     }
 
