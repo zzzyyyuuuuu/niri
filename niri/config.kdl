@@ -2,32 +2,137 @@
 input {
     keyboard {
         xkb {
-            layout "tr" 
+               layout "tr"
         }
-        numlock // Enable numlock on startup
+
+        numlock
     }
 
-    touchpad {
-        tap // Enable tap-to-click
-        natural-scroll // Enable natural (macOS-style) scrolling
+   touchpad {
+        tap 
+        natural-scroll 
     }
 
     focus-follows-mouse
     workspace-auto-back-and-forth 
+    mouse {
+
+    }
+
+    trackpoint {
+
+    }
 }
 
-// ────────────── Output Configuration ──────────────
-
-/- output "Virtual-1" {
-    mode "1920x1080@60" 
-    scale 1 
+environment {
+	DISPLAY ":0"
 }
 
-// ────────────── Keybindings ──────────────
-// https://github.com/YaLTeR/niri/wiki/Configuration:-Key-Bindings
+// Applications Startup
+
+spawn-at-startup "xwayland-satellite"
+spawn-at-startup "swayidle"
+spawn-at-startup "dunst"
+spawn-at-startup "waybar"
+spawn-at-startup "swaybg" "--image" "/home/alerion/.config/niri/wall.png"
+
+// Screen Resolution
+
+output "Virtual-1" {
+
+    mode "1920x10800@60"
+    scale 1.0
+    transform "normal"
+    position x=1920 y=0
+}
+
+
+// Layout Configuration
+
+layout {
+    gaps 25
+    background-color "transparent"
+    always-center-single-column
+    center-focused-column "never"
+    default-column-display "normal"
+ 
+    preset-column-widths {
+        proportion 0.33333
+        proportion 0.5
+        proportion 0.66667
+    }
+
+    // New windows default width
+
+    default-column-width { proportion 0.5; }
+
+
+    // Focus Ring
+
+    focus-ring {
+        width 8
+        active-color "transparent"
+        inactive-color "transparent"
+    }
+
+    // Always visible border
+
+    border {
+
+        off
+        width 4
+
+    }
+
+    // Windows Shadow
+
+    shadow {
+
+        on
+        softness 40
+        spread 4
+        offset x=0 y=5
+        color "#0007"
+    }
+
+}
+
+
+// Animation settings.
+
+animations {
+}
+
+
+// Window Rules
+
+  window-rule {
+        match title="Firefox"
+        open-maximized true 
+
+
+} 
+ 
+window-rule {
+       match title="org.kde.konsole"
+        open-floating true  
+        open-maximized false
+}
+
+
+    window-rule {
+        geometry-corner-radius 0 
+        clip-to-geometry true
+        open-maximized true
+}
+
+
 
 binds {
-    ALT+SHIFT+ESCAPE                     { show-hotkey-overlay; }
+
+      Alt+Tab repeat=false { toggle-overview; }
+
+ALT+SHIFT+ESCAPE                     { show-hotkey-overlay; }
 
     // ─── Applications ───
     ALT+RETURN                          hotkey-overlay-title="Open Terminal: alacritty" { spawn-sh "konsole"; }
@@ -125,8 +230,6 @@ binds {
     ALT+CTRL+8                          { move-column-to-workspace 8; }
     ALT+CTRL+9                          { move-column-to-workspace 9; }
 
-    ALT+TAB                             { focus-workspace-previous; }
-
     // ─── Layout Controls ───
     ALT+CTRL+F                          { expand-column-to-available-width; }
     ALT+C                               { center-column; }
@@ -157,105 +260,4 @@ binds {
     ALT+O                               repeat=false { toggle-overview; }
 }
 
-// ────────────── Startup Applications ──────────────
-// https://github.com/YaLTeR/niri/wiki/Configuration:-Miscellaneous#spawn-sh-at-startup
 
-    spawn-sh-at-startup "/usr/lib/polkit-kde-authentication-agent-1 &" // Polkit 
-    spawn-sh-at-startup "swaybg -i ~/walls/Dark/keyhole.jpg --mode fill" // Set wallpaper
-    spawn-sh-at-startup "waybar" // Launch waybar
-
-    prefer-no-csd // Disable program decorations
-    screenshot-path null // Disable screenshot saving
-
-// ────────────── Layout Settings ──────────────
-// https://github.com/YaLTeR/niri/wiki/Configuration:-Layout
-
-    layout {
-        gaps 16 // Gap between windows
-        center-focused-column "never" // Don’t auto-center focused column
-        
-        preset-column-widths {
-            proportion 0.33333
-            proportion 0.5
-            proportion 0.66667
-        }
-
-        focus-ring {
-            width 0
-            active-color "#00ac89"
-            inactive-color "#505050"
-        }
-
-        shadow {
-            softness 30
-            spread 5
-            offset x=0 y=5
-            color "#0007"
-        }
-
-        struts {}
-    }
-
-// ────────────── Animation Settings ──────────────
-// https://github.com/YaLTeR/niri/wiki/Configuration:-Animations
-    animations {
-        workspace-switch {
-            spring damping-ratio=1.0 stiffness=1000 epsilon=0.0001
-        }
-        window-open {
-            duration-ms 200
-            curve "ease-out-quad"
-        }
-        window-close {
-            duration-ms 200
-            curve "ease-out-cubic"
-        }
-        horizontal-view-movement {
-            spring damping-ratio=1.0 stiffness=900 epsilon=0.0001
-        }
-        window-movement {
-            spring damping-ratio=1.0 stiffness=800 epsilon=0.0001
-        }
-        window-resize {
-            spring damping-ratio=1.0 stiffness=1000 epsilon=0.0001
-        }
-        config-notification-open-close {
-            spring damping-ratio=0.6 stiffness=1200 epsilon=0.001
-        }
-        screenshot-ui-open {
-            duration-ms 300
-            curve "ease-out-quad"
-        }
-        overview-open-close {
-            spring damping-ratio=1.0 stiffness=900 epsilon=0.0001
-        }
-    }
-
-// ────────────── Window Rules ──────────────
-// https://github.com/YaLTeR/niri/wiki/Configuration:-Window-Rules
-
-    window-rule {
-        match app-id=r#"firefox$"# title="^Picture-in-Picture$"
-        open-floating true // Always float Firefox PiP windows
-    }
-
-    window-rule {
-        geometry-corner-radius 0 // Set every window radius to 20
-        clip-to-geometry true
-    }
-
-// ────────────── Environment Variables ──────────────
-// https://github.com/YaLTeR/niri/wiki/Configuration:-Miscellaneous#environment
-
-    environment {
-        DISPLAY ":1"
-        ELECTRON_OZONE_PLATFORM_HINT "auto"
-        QT_QPA_PLATFORM "wayland"
-        QT_WAYLAND_DISABLE_WINDOWDECORATION "1"
-        XDG_SESSION_TYPE "wayland"
-        XDG_CURRENT_DESKTOP "niri"
-    }
-
-    hotkey-overlay {
-        skip-at-startup
-    }
