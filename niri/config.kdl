@@ -257,7 +257,6 @@ ALT+SHIFT+ESCAPE                     { show-hotkey-overlay; }
     // ─── Exit / Power ───
     ALT+SHIFT+E                     { quit; } // Also quits Niri
     ALT+SHIFT+P                         { power-off-monitors; } // Turn off screens (useful for OLED or privacy)
-    ALT+O                               repeat=false { toggle-overview; }
 }
 
 
