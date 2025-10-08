@@ -1,2 +1,1 @@
-# niri
-niri 
+my niri settings :)
