@@ -96,7 +96,7 @@
   },
   "custom/power": {
     "tooltip": false,
-    "on-click": "wlogout -p layer-shell &",
+    "on-click": "~/.config/niri/scripts/powermenu",
     "format": "⏻",
   },
   "custom/notification": {
