@@ -85,8 +85,8 @@ typeset -A menu
 menu=(
   [Shutdown]="systemctl poweroff"
   [Reboot]="systemctl reboot"
-  [Suspend]="i3lock -i ~/Pictures/backgrounds/coffee.png && systemctl suspend"
-  [Logout]="i3-msg exit"
+  [Suspend]="swaylock"
+  [Logout]="niri msg quit"
 )
 
 menu_nrows=${#menu[@]}
