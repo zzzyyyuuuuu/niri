@@ -3,12 +3,11 @@ gnome-keyring
 polkit-gnome
 
 # Browser
-helium-browser-bin
+firefox
 
 # Development
 git
-lazygit
-neovim
+konsole
 visual-studio-code-bin
 
 # Terminal & Shell
