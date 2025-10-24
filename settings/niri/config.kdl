@@ -34,7 +34,7 @@ spawn-at-startup "xwayland-satellite"
 spawn-at-startup "swayidle"
 spawn-at-startup "dunst"
 spawn-at-startup "waybar"
-spawn-sh-at-startup "swaybg -i ~/.config/niri/wallpepers/solarcatpuccin.png --mode fill"
+spawn-sh-at-startup "swaybg -i ~/.config/niri/wallpepers/wall.png --mode fill"
 
 output "Virtual-1" {
 
@@ -115,7 +115,7 @@ window-rule {
     window-rule {
         geometry-corner-radius 0 
         clip-to-geometry true
-        open-maximized true
+        open-maximized false
 }
 
 
@@ -128,7 +128,7 @@ ALT+SHIFT+ESCAPE                     { show-hotkey-overlay; }
 
     // ─── Applications ───
     ALT+RETURN                          hotkey-overlay-title="Open Terminal: alacritty" { spawn-sh "konsole"; }
-    ALT+D                           hotkey-overlay-title="Open App Launcher: rofi" { spawn-sh "rofi -show drun"; }
+    ALT+D                           hotkey-overlay-title="Open App Launcher: Fuzzel" { spawn-sh "fuzzel"; }
     ALT+SHIFT+W                               hotkey-overlay-title="Open Browser: firefox" { spawn-sh "firefox"; }
     ALT+SHIFT+L                           hotkey-overlay-title="Lock Screen: swaylock" { spawn-sh "swaylock"; }
     ALT+W                            hotkey-overlay-title="web search : rofi web search " { spawn "~/.config/rofi/rofi-web-search.sh"; }
@@ -247,10 +247,9 @@ ALT+SHIFT+ESCAPE                     { show-hotkey-overlay; }
     ALT+ESCAPE                          allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
 
     // ─── Exit / Power ───
-    ALT+SHIFT+E                     { quit; } // Also quits Niri
+    ALT+SHIFT+E                    hotkey-overlay-title="exit : exit " { spawn "~/.config/niri/scripts/powermenu"; }
     ALT+SHIFT+P                         { power-off-monitors; } // Turn off screens (useful for OLED or privacy)
 }
-
 
 
 
