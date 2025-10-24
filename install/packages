@@ -25,36 +25,16 @@ pv
 bc
 
 # Hyprland Ecosystem
-hyprland
-hyprland-qtutils
-hyprland-qt-support
-hyprpaper
-hyprpicker
-hypridle
-hyprlock
-xdg-desktop-portal-hyprland
-hyprsunset
-hyprcursor
-hyprshot
+hyprpicker 
+
+# WM
+niri 
 
 # Wayland Tools & UI
 waybar
-mako
-walker
-swayosd
 swaybg
-grim
-slurp
-satty
-kooha
-zenity
-uwsm
-python-pywal16
-gjs
-waypaper
-matugen-bin
-impala
-loupe
+rofi-wayland 
+fuzzel
 
 # Audio
 pamixer
@@ -69,11 +49,8 @@ openssh
 ufw
 
 # File Management
-nautilus
-nautilus-open-any-terminal
-rsync
-gvfs-dnssd
-unzip
+thunar
+xarchiver
 
 # System Utilities
 plocate
@@ -112,3 +89,4 @@ xdg-utils
 # Utilities
 wget
 jq
+
