@@ -13,12 +13,12 @@ configuration {
 /*****----- Global Properties -----*****/
 
 * {
-    background:     #1D1F28FF;
-    background-alt: #282A36FF;
-    foreground:     #FDFDFDFF;
-    selected:       #79E6F3FF;
-    active:         #5ADECDFF;
-    urgent:         #F37F97FF;
+    background:     #282828FF;
+    background-alt: #353535FF;
+    foreground:     #EBDBB2FF;
+    selected:       #83A598FF;
+    active:         #B8BB26FF;
+    urgent:         #FB4934FF;
 }
 
 * {
