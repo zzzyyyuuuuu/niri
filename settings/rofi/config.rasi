@@ -22,8 +22,8 @@ configuration {
 }
 
 * {
-    font: "JetBrains Mono Nerd Font 20";
-}
+    font: "Iosevka Nerd Font 10";
+
 
 * {
     border-colour:               var(selected);
