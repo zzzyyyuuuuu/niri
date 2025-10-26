@@ -1,0 +1,21 @@
+mode=drun
+width=560
+height=300
+
+allow_images=true
+image_size=36
+yoffset=200
+single_click=true
+close_on_focus_loss=true
+use_search_box=false
+insensitive=true
+gtk_dark=true
+term=ghostty
+matching=fuzzy
+dynamic_lines=false
+normal_window=true
+hide_scroll=true
+pre_display_exec=killall 
+prompt= Search : 
+
+
