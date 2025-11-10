@@ -64,6 +64,11 @@ otf-font-awesome
 yaru-icon-theme
 bibata-cursor-theme
 gnome-themes-extra
+font-awesome 
+ttf-roboto 
+ttf-nimbus-sans 
+ttf-ms-fonts
+ttf-fira-sans 
 
 # Applications
 localsend-bin
@@ -89,4 +94,5 @@ xdg-utils
 # Utilities
 wget
 jq
+
 
