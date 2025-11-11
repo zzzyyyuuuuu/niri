@@ -252,7 +252,7 @@ ALT+SHIFT+ESCAPE                     { show-hotkey-overlay; }
     ALT+ESCAPE                          allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
 
     // ─── Exit / Power ───
-    ALT+SHIFT+E                    hotkey-overlay-title="exit : exit " { spawn "~/.config/niri/scripts/powermenu"; }
+    ALT+SHIFT+E                    { quit; }
     ALT+SHIFT+P                         { power-off-monitors; } // Turn off screens (useful for OLED or privacy)
 }
 
