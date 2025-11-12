@@ -54,7 +54,6 @@ output "Virtual-1" {
 
 layout {
     gaps 25
-    background-color "transparent"
     always-center-single-column
     center-focused-column "never"
     default-column-display "normal"
@@ -74,8 +73,8 @@ layout {
 
     focus-ring {
         width 8
-        active-color "transparent"
-        inactive-color "transparent"
+        active-color "b4befe"
+        inactive-color "45475a"
     }
 
     // Always visible border
