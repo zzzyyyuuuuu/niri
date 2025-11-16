@@ -1,262 +1,223 @@
-
+// ─────────────────────────────────────────────
+//  INPUT CONFIGURATION
+// ─────────────────────────────────────────────
 input {
     keyboard {
         xkb {
-               layout "tr"
+            layout "tr" // Keyboard layout
         }
-
-        numlock
+        numlock // Enable NumLock by default
     }
 
-   touchpad {
-        tap 
-        natural-scroll 
+    touchpad {
+        tap              // Tap-to-click
+        natural-scroll   // Reverse scrolling direction
     }
 
-    focus-follows-mouse
-    workspace-auto-back-and-forth 
-    mouse {
+    focus-follows-mouse            // Automatically focus windows when hovering
+    workspace-auto-back-and-forth  // Return to last workspace when switching
 
-    }
-
-    trackpoint {
-
-    }
+    mouse { }       // Placeholder for future mouse settings
+    trackpoint { }  // Placeholder for trackpoint settings
 }
 
+// ─────────────────────────────────────────────
+//  ENVIRONMENT VARIABLES
+// ─────────────────────────────────────────────
 environment {
-        DISPLAY ":1"
-        ELECTRON_OZONE_PLATFORM_HINT "auto"
-        QT_QPA_PLATFORM "wayland"
-        QT_WAYLAND_DISABLE_WINDOWDECORATION "1"
-        XDG_SESSION_TYPE "wayland"
-        XDG_CURRENT_DESKTOP "niri"
-    }
+    DISPLAY ":1"
+    ELECTRON_OZONE_PLATFORM_HINT "auto"
+    QT_QPA_PLATFORM "wayland"
+    QT_WAYLAND_DISABLE_WINDOWDECORATION "1"
+    XDG_SESSION_TYPE "wayland"
+    XDG_CURRENT_DESKTOP "niri"
+}
 
-// Applications Startup
-
+// ─────────────────────────────────────────────
+//  STARTUP APPLICATIONS
+// ─────────────────────────────────────────────
 spawn-at-startup "xwayland-satellite"
 spawn-at-startup "swayidle"
 spawn-at-startup "dunst"
 spawn-at-startup "waybar"
+
+// Wallpaper
 spawn-sh-at-startup "swaybg -i ~/.config/niri/wallpepers/wall.png --mode fill"
 
+// ─────────────────────────────────────────────
+//  OUTPUT / MONITOR SETTINGS
+// ─────────────────────────────────────────────
 output "Virtual-1" {
-
     mode "1920x1080@60"
     scale 1.0
     transform "normal"
     position x=1920 y=0
 }
 
-
-// Layout Configuration
-
+// ─────────────────────────────────────────────
+//  LAYOUT CONFIGURATION
+// ─────────────────────────────────────────────
 layout {
     gaps 25
-    always-center-single-column
-    center-focused-column "never"
-    default-column-display "normal"
- 
+    always-center-single-column      // Center a single column
+    center-focused-column "never"    // Control how focused column is positioned
+    default-column-display "normal"  // Normal (non-tabbed) display
+
     preset-column-widths {
-        proportion 0.33333
-        proportion 0.5
-        proportion 0.66667
+        proportion 0.33333  // Narrow
+        proportion 0.5       // Medium
+        proportion 0.66667   // Wide
     }
 
-    // New windows default width
-
+    // Default window width when opened
     default-column-width { proportion 0.5; }
 
-
-    // Focus Ring
-
+    // Focus ring around active window
     focus-ring {
         width 8
         active-color "b4befe"
         inactive-color "45475a"
     }
 
-    // Always visible border
-
+    // Window border settings
     border {
-
-        off
+        off      // Border disabled, but width defined
         width 4
-
     }
 
-    // Windows Shadow
-
+    // Window shadow styling
     shadow {
-
         on
         softness 40
         spread 4
         offset x=0 y=5
         color "#0007"
     }
-
 }
 
+// ─────────────────────────────────────────────
+//  ANIMATION SETTINGS (Currently Empty)
+// ─────────────────────────────────────────────
+animations { }
 
-// Animation settings.
-
-animations {
-}
-
-
-// Window Rules
-
+// ─────────────────────────────────────────────
+//  WINDOW RULES
+// ─────────────────────────────────────────────
 window-rule {
     match app-id="firefox"
     match app-id="code"
     match app-id="dev.zed.Zed"
+
     default-column-width { proportion 1.0; }
 }
 
-
-    window-rule {
-        geometry-corner-radius 0 
-        clip-to-geometry true
-        open-maximized false
+window-rule {
+    geometry-corner-radius 0    // No rounded corners
+    clip-to-geometry true
+    open-maximized false
 }
 
-
-
+// ─────────────────────────────────────────────
+//  KEYBINDINGS
+// ─────────────────────────────────────────────
 binds {
 
-      Alt+Tab repeat=false { toggle-overview; }
+    Alt+Tab repeat=false { toggle-overview; }
+    ALT+SHIFT+ESCAPE { show-hotkey-overlay; }
 
-ALT+SHIFT+ESCAPE                     { show-hotkey-overlay; }
+    // Applications
+    ALT+RETURN { spawn-sh "konsole"; }
+    ALT+D { spawn-sh "fuzzel"; }
+    ALT+SHIFT+W { spawn-sh "firefox"; }
+    ALT+SHIFT+L { spawn-sh "swaylock"; }
+    ALT+W { spawn "~/.config/rofi/rofi-web-search.sh"; }
+    ALT+SHIFT+T { spawn-sh "hyprpicker"; }
+    ALT+SHIFT+D { spawn-sh "thunar"; }
 
-    // ─── Applications ───
-    ALT+RETURN                          hotkey-overlay-title="Open Terminal: alacritty" { spawn-sh "konsole"; }
-    ALT+D                           hotkey-overlay-title="Open App Launcher: Fuzzel" { spawn-sh "fuzzel"; }
-    ALT+SHIFT+W                               hotkey-overlay-title="Open Browser: firefox" { spawn-sh "firefox"; }
-    ALT+SHIFT+L                           hotkey-overlay-title="Lock Screen: swaylock" { spawn-sh "swaylock"; }
-    ALT+W                            hotkey-overlay-title="web search : rofi web search " { spawn "~/.config/rofi/rofi-web-search.sh"; }
-    ALT+SHIFT+T       hotkey-overlay-title="Select color : HyprPicker" { spawn-sh "hyprpicker"; }
+    // Audio Controls (PipeWire)
+    XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+"; }
+    XF86AudioLowerVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-"; }
+    XF86AudioMute allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"; }
+    XF86AudioMicMute allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"; }
+    XF86AudioNext allow-when-locked=true { spawn-sh "playerctl next"; }
+    XF86AudioPause allow-when-locked=true { spawn-sh "playerctl play-pause"; }
+    XF86AudioPlay allow-when-locked=true { spawn-sh "playerctl play-pause"; }
+    XF86AudioPrev allow-when-locked=true { spawn-sh "playerctl previous"; }
 
+    // Window Controls
+    ALT+SHIFT+Q { close-window; }
 
-    // Please choose your own file manager
-   ALT+SHIFT+D                             hotkey-overlay-title="File Manager: Thunar" { spawn-sh "thunar"; }
+    ALT+LEFT  { focus-column-left; }
+    ALT+RIGHT { focus-column-right; }
+    ALT+UP    { focus-window-up; }
+    ALT+DOWN  { focus-window-down; }
 
-    // ─── Audio Controls ───
-    // Example volume keys mappings for PipeWire & WirePlumber.
-    // The allow-when-locked=true property makes them work even when the session is locked.
-    XF86AudioRaiseVolume                allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+"; }
-    XF86AudioLowerVolume                allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-"; }
-    XF86AudioMute                       allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"; }
-    XF86AudioMicMute                    allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"; }
-    XF86AudioNext                       allow-when-locked=true { spawn-sh "playerctl next"; }
-    XF86AudioPause                      allow-when-locked=true { spawn-sh "playerctl play-pause"; }
-    XF86AudioPlay                       allow-when-locked=true { spawn-sh "playerctl play-pause"; }
-    XF86AudioPrev                       allow-when-locked=true { spawn-sh "playerctl previous"; }
+    ALT+CTRL+LEFT  { move-column-left; }
+    ALT+CTRL+RIGHT { move-column-right; }
+    ALT+CTRL+UP    { move-window-up; }
+    ALT+CTRL+DOWN  { move-window-down; }
 
-    // ─── Window Movement and Focus ───
-    ALT+SHIFT+Q                               { close-window; }
+    ALT+HOME { focus-column-first; }
+    ALT+END  { focus-column-last; }
+    ALT+CTRL+HOME { move-column-to-first; }
+    ALT+CTRL+END  { move-column-to-last; }
 
-    ALT+LEFT                            { focus-column-left; }
-    ALT+H                               { focus-column-left; }
-    ALT+RIGHT                           { focus-column-right; }
-    ALT+L                               { focus-column-right; }
-    ALT+UP                              { focus-window-up; }
-    ALT+K                               { focus-window-up; }
-    ALT+DOWN                            { focus-window-down; }
-    ALT+J                               { focus-window-down; }
+    // Multi-Monitor
+    ALT+SHIFT+LEFT  { focus-monitor-left; }
+    ALT+SHIFT+RIGHT { focus-monitor-right; }
+    ALT+SHIFT+UP    { focus-monitor-up; }
+    ALT+SHIFT+DOWN  { focus-monitor-down; }
 
-    ALT+CTRL+LEFT                       { move-column-left; }
-    ALT+CTRL+H                          { move-column-left; }
-    ALT+CTRL+RIGHT                      { move-column-right; }
-    ALT+CTRL+L                          { move-column-right; }
-    ALT+CTRL+UP                         { move-window-up; }
-    ALT+CTRL+K                          { move-window-up; }
-    ALT+CTRL+DOWN                       { move-window-down; }
-    ALT+CTRL+J                          { move-window-down; }
+    ALT+SHIFT+CTRL+LEFT  { move-column-to-monitor-left; }
+    ALT+SHIFT+CTRL+RIGHT { move-column-to-monitor-right; }
+    ALT+SHIFT+CTRL+UP    { move-column-to-monitor-up; }
+    ALT+SHIFT+CTRL+DOWN  { move-column-to-monitor-down; }
 
-    ALT+HOME                            { focus-column-first; }
-    ALT+END                             { focus-column-last; }
-    ALT+CTRL+HOME                       { move-column-to-first; }
-    ALT+CTRL+END                        { move-column-to-last; }
+    // Workspace Navigation
+    ALT+1 { focus-workspace 1; }
+    ALT+2 { focus-workspace 2; }
+    ALT+3 { focus-workspace 3; }
+    ALT+4 { focus-workspace 4; }
+    ALT+5 { focus-workspace 5; }
+    ALT+6 { focus-workspace 6; }
+    ALT+7 { focus-workspace 7; }
+    ALT+8 { focus-workspace 8; }
+    ALT+9 { focus-workspace 9; }
 
-    ALT+SHIFT+LEFT                      { focus-monitor-left; }
-    ALT+SHIFT+RIGHT                     { focus-monitor-right; }
-    ALT+SHIFT+UP                        { focus-monitor-up; }
-    ALT+SHIFT+DOWN                      { focus-monitor-down; }
+    ALT+CTRL+1 { move-column-to-workspace 1; }
+    ALT+CTRL+2 { move-column-to-workspace 2; }
+    ALT+CTRL+3 { move-column-to-workspace 3; }
+    ALT+CTRL+4 { move-column-to-workspace 4; }
+    ALT+CTRL+5 { move-column-to-workspace 5; }
+    ALT+CTRL+6 { move-column-to-workspace 6; }
+    ALT+CTRL+7 { move-column-to-workspace 7; }
+    ALT+CTRL+8 { move-column-to-workspace 8; }
+    ALT+CTRL+9 { move-column-to-workspace 9; }
 
-    ALT+SHIFT+CTRL+LEFT                 { move-column-to-monitor-left; }
-    ALT+SHIFT+CTRL+RIGHT                { move-column-to-monitor-right; }
-    ALT+SHIFT+CTRL+UP                   { move-column-to-monitor-up; }
-    ALT+SHIFT+CTRL+DOWN                 { move-column-to-monitor-down; }
+    // Column / Window Layout Controls
+    ALT+CTRL+F { expand-column-to-available-width; }
+    ALT+C      { center-column; }
+    ALT+CTRL+C { center-visible-columns; }
 
-    // ─── Workspace Switching ───
-    ALT+WHEELSCROLLDOWN                 cooldown-ms=150 { focus-workspace-down; }
-    ALT+WHEELSCROLLUP                   cooldown-ms=150 { focus-workspace-up; }
-    ALT+CTRL+WHEELSCROLLDOWN            cooldown-ms=150 { move-column-to-workspace-down; }
-    ALT+CTRL+WHEELSCROLLUP              cooldown-ms=150 { move-column-to-workspace-up; }
+    ALT+MINUS       { set-column-width "-10%"; }
+    ALT+EQUAL       { set-column-width "+10%"; }
+    ALT+SHIFT+MINUS { set-window-height "-10%"; }
+    ALT+SHIFT+EQUAL { set-window-height "+10%"; }
 
-    ALT+WHEELSCROLLRIGHT                { focus-column-right; }
-    ALT+WHEELSCROLLLEFT                 { focus-column-left; }
-    ALT+CTRL+WHEELSCROLLRIGHT           { move-column-right; }
-    ALT+CTRL+WHEELSCROLLLEFT            { move-column-left; }
+    // Modes
+    ALT+T { toggle-window-floating; }
+    ALT+F { fullscreen-window; }
+    ALT+I { toggle-column-tabbed-display; }
 
-    ALT+SHIFT+WHEELSCROLLDOWN           { focus-column-right; }
-    ALT+SHIFT+WHEELSCROLLUP             { focus-column-left; }
-    ALT+CTRL+SHIFT+WHEELSCROLLDOWN      { move-column-right; }
-    ALT+CTRL+SHIFT+WHEELSCROLLUP        { move-column-left; }
+    // Screenshots
+    CTRL+SHIFT+1 { screenshot; }
+    CTRL+SHIFT+2 { screenshot-screen; }
+    CTRL+SHIFT+3 { screenshot-window; }
 
-    ALT+1                               { focus-workspace 1; }
-    ALT+2                               { focus-workspace 2; }
-    ALT+3                               { focus-workspace 3; }
-    ALT+4                               { focus-workspace 4; }
-    ALT+5                               { focus-workspace 5; }
-    ALT+6                               { focus-workspace 6; }
-    ALT+7                               { focus-workspace 7; }
-    ALT+8                               { focus-workspace 8; }
-    ALT+9                               { focus-workspace 9; }
+    // Emergency shortcut inhibitor override
+    ALT+ESCAPE allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
 
-    ALT+CTRL+1                          { move-column-to-workspace 1; }
-    ALT+CTRL+2                          { move-column-to-workspace 2; }
-    ALT+CTRL+3                          { move-column-to-workspace 3; }
-    ALT+CTRL+4                          { move-column-to-workspace 4; }
-    ALT+CTRL+5                          { move-column-to-workspace 5; }
-    ALT+CTRL+6                          { move-column-to-workspace 6; }
-    ALT+CTRL+7                          { move-column-to-workspace 7; }
-    ALT+CTRL+8                          { move-column-to-workspace 8; }
-    ALT+CTRL+9                          { move-column-to-workspace 9; }
-
-    // ─── Layout Controls ───
-    ALT+CTRL+F                          { expand-column-to-available-width; }
-    ALT+C                               { center-column; }
-    ALT+CTRL+C                          { center-visible-columns; }
-    ALT+MINUS                           { set-column-width "-10%"; }
-    ALT+EQUAL                           { set-column-width "+10%"; }
-    ALT+SHIFT+MINUS                     { set-window-height "-10%"; }
-    ALT+SHIFT+EQUAL                     { set-window-height "+10%"; }
-
-    // ─── Modes ───
-    ALT+T                               { toggle-window-floating; }
-    ALT+F                               { fullscreen-window; }
-    ALT+I                             { toggle-column-tabbed-display; }
-
-    // ─── Screenshots ───
-    CTRL+SHIFT+1                        { screenshot; }
-    CTRL+SHIFT+2                        { screenshot-screen; }
-    CTRL+SHIFT+3                        { screenshot-window; }
-
-    // ─── Emergency Escape Key ───
-    // Use this when a fullscreen app blocks your keybinds.
-    // It disables any active keyboard shortcut inhibitor, restoring control.
-    ALT+ESCAPE                          allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
-
-    // ─── Exit / Power ───
-    ALT+SHIFT+E                    { quit; }
-    ALT+SHIFT+P                         { power-off-monitors; } // Turn off screens (useful for OLED or privacy)
+    // Quit / Power
+    ALT+SHIFT+E { quit; }
+    ALT+SHIFT+P { power-off-monitors; }
 }
-
-
-
-
-
-
