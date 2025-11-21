@@ -117,6 +117,10 @@ window-rule {
     open-maximized false
 }
 
+layer-rule {
+    place-within-backdrop true
+}
+
 // ─────────────────────────────────────────────
 //  KEYBINDINGS
 // ─────────────────────────────────────────────
