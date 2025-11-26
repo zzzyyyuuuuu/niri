@@ -95,4 +95,8 @@ xdg-utils
 wget
 jq
 
+# for fedora : 
+sudo dnf copr enable materka/swww
+or 
+sudo dnf copr enable alebastr/sway-extras
 
