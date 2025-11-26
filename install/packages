@@ -35,6 +35,7 @@ waybar
 swaybg
 rofi-wayland 
 fuzzel
+swww
 
 # Audio
 pamixer
